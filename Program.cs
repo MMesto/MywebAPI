@@ -1,22 +1,29 @@
+using Microsoft.EntityFrameworkCore;   
+using MywebAPI.Data;                   
+
 var builder = WebApplication.CreateBuilder(args);
 
-// ===== DEEL 1: services toevoegen (wat heeft je app nodig?) =====
-builder.Services.AddControllers();          // zodat controllers werken
-builder.Services.AddRouting();              // zodat URL's naar de juiste controller gaan
-builder.Services.AddEndpointsApiExplorer(); // nodig voor Swagger
-builder.Services.AddSwaggerGen();           // Swagger zelf
+// services toevoegen
+builder.Services.AddControllers();
+builder.Services.AddRouting();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// DbContext registreren
+builder.Services.AddDbContext<PortfolioDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PortfolioDb")));
 
 var app = builder.Build();
 
-// ===== DEEL 2: middleware (welke route loopt een request af?) =====
+// middleware 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();    // maakt de beschrijving van je API
-    app.UseSwaggerUI();  // maakt de testpagina
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.MapControllers();   // koppelt je controllers aan URL's
+app.MapControllers();
 
 app.Run();
