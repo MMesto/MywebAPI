@@ -2,7 +2,7 @@ namespace MywebAPI.Data.Entities;
 
 public class Project
 {
-    public int Id { get; set; }                       // primaire sleutel: database kiest het nummer
+    public int Id { get; set; }                       // primaire sleutel
     public string Titel { get; set; } = string.Empty;
     public string Beschrijving { get; set; } = string.Empty;
     public string Categorie { get; set; } = string.Empty;
