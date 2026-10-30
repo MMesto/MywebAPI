@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;   
-using MywebAPI.Data;                   
+using Microsoft.EntityFrameworkCore;
+using MywebAPI.Data;
+using MywebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PortfolioDb")));
 
+// Services registreren (altijd vóór builder.Build())
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IBlogpostService, BlogpostService>();
+
 var app = builder.Build();
 
-// middleware 
+// middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
