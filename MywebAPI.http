@@ -1,6 +1,67 @@
 @MywebAPI_HostAddress = http://localhost:5229
 
-GET {{MywebAPI_HostAddress}}/weatherforecast/
+### Alle projecten
+GET {{MywebAPI_HostAddress}}/api/projects
 Accept: application/json
 
-###
+### Eén project
+GET {{MywebAPI_HostAddress}}/api/projects/1
+Accept: application/json
+
+### Project aanmaken
+POST {{MywebAPI_HostAddress}}/api/projects
+Content-Type: application/json
+
+{
+  "titel": "Portfoliosite",
+  "beschrijving": "Mijn eigen portfoliosite met projecten en blog",
+  "categorie": "Web",
+  "gitHubUrl": "https://github.com/MMesto/Portfolio-site",
+  "datum": "2026-10-30T00:00:00"
+}
+
+### Project wijzigen
+PUT {{MywebAPI_HostAddress}}/api/projects/1
+Content-Type: application/json
+
+{
+  "titel": "Portfoliosite v2",
+  "beschrijving": "Portfoliosite met projecten en blog, nu met eigen backend",
+  "categorie": "Web",
+  "gitHubUrl": "https://github.com/MMesto/Portfolio-site",
+  "datum": "2026-10-30T00:00:00"
+}
+
+### Project verwijderen
+DELETE {{MywebAPI_HostAddress}}/api/projects/1
+
+### Alle blogposts
+GET {{MywebAPI_HostAddress}}/api/blogposts
+Accept: application/json
+
+### Eén blogpost
+GET {{MywebAPI_HostAddress}}/api/blogposts/1
+Accept: application/json
+
+### Blogpost aanmaken
+POST {{MywebAPI_HostAddress}}/api/blogposts
+Content-Type: application/json
+
+{
+  "titel": "Mijn eerste blog",
+  "inhoud": "Vandaag heb ik een Web API met EF Core en SQL Server gebouwd.",
+  "publicatiedatum": "2026-10-30T00:00:00"
+}
+
+### Blogpost wijzigen
+PUT {{MywebAPI_HostAddress}}/api/blogposts/1
+Content-Type: application/json
+
+{
+  "titel": "Mijn eerste blog (bijgewerkt)",
+  "inhoud": "Vandaag heb ik een Web API met EF Core en SQL Server gebouwd. Alles werkt!",
+  "publicatiedatum": "2026-10-30T00:00:00"
+}
+
+### Blogpost verwijderen
+DELETE {{MywebAPI_HostAddress}}/api/blogposts/1
