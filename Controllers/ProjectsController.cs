@@ -10,7 +10,6 @@ public class ProjectsController : ControllerBase
 {
     private readonly IProjectService _service;
 
-    // Constructorinjectie: ASP.NET Core geeft de service mee
     public ProjectsController(IProjectService service)
     {
         _service = service;
@@ -41,7 +40,7 @@ public class ProjectsController : ControllerBase
     public async Task<ActionResult<ProjectDto>> Create(CreateProjectDto dto)
     {
         var created = await _service.CreateAsync(dto);
-        // 201 Created + Location-header naar GET api/projects/{id}
+        // 201 + Location-header, dan weet de client waar het nieuwe project te vinden is
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 

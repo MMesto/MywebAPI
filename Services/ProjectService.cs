@@ -9,12 +9,12 @@ public class ProjectService : IProjectService
 {
     private readonly PortfolioDbContext _db;
 
-    // Constructorinjectie: ASP.NET Core geeft de DbContext mee
     public ProjectService(PortfolioDbContext db)
     {
         _db = db;
     }
 
+    // AsNoTracking omdat we hier alleen lezen, scheelt EF wat werk
     public async Task<List<ProjectDto>> GetAllAsync()
     {
         var projects = await _db.Projects.AsNoTracking().ToListAsync();
@@ -29,6 +29,7 @@ public class ProjectService : IProjectService
 
     public async Task<ProjectDto> CreateAsync(CreateProjectDto dto)
     {
+        // a1: dto omzetten naar een entity (Id laat de database zelf maken)
         var project = new Project
         {
             Titel = dto.Titel,
@@ -38,37 +39,45 @@ public class ProjectService : IProjectService
             Datum = dto.Datum
         };
 
+        // a2: opslaan, na SaveChanges heeft project.Id een waarde
         _db.Projects.Add(project);
-        await _db.SaveChangesAsync();   // INSERT in SQL Server, Id wordt ingevuld
+        await _db.SaveChangesAsync();
+
+        // a3: terugsturen als dto, inclusief het nieuwe Id
         return ToDto(project);
     }
 
     public async Task<bool> UpdateAsync(int id, UpdateProjectDto dto)
     {
+        // b1: bestaand project ophalen, zonder AsNoTracking want EF moet de wijzigingen zien
         var project = await _db.Projects.FindAsync(id);
         if (project == null) return false;
 
+        // b2: velden overschrijven
         project.Titel = dto.Titel;
         project.Beschrijving = dto.Beschrijving;
         project.Categorie = dto.Categorie;
         project.GitHubUrl = dto.GitHubUrl;
         project.Datum = dto.Datum;
 
-        await _db.SaveChangesAsync();   // UPDATE
+        // b3: EF ziet zelf welke velden veranderd zijn en maakt de UPDATE
+        await _db.SaveChangesAsync();
         return true;
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
+        // c1: eerst kijken of het project bestaat
         var project = await _db.Projects.FindAsync(id);
         if (project == null) return false;
 
+        // c2: verwijderen en opslaan
         _db.Projects.Remove(project);
-        await _db.SaveChangesAsync();   // DELETE
+        await _db.SaveChangesAsync();
         return true;
     }
 
-    // ===== DTO-MAPPING: entiteit naar DTO, op één vaste plek =====
+    // mapping op één plek, zodat een nieuw veld maar hier toegevoegd hoeft te worden
     private static ProjectDto ToDto(Project p) => new ProjectDto
     {
         Id = p.Id,
@@ -78,4 +87,4 @@ public class ProjectService : IProjectService
         GitHubUrl = p.GitHubUrl,
         Datum = p.Datum
     };
-}
+}

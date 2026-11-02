@@ -10,7 +10,6 @@ public class BlogpostsController : ControllerBase
 {
     private readonly IBlogpostService _service;
 
-    // Constructorinjectie: ASP.NET Core geeft de service mee
     public BlogpostsController(IBlogpostService service)
     {
         _service = service;
@@ -41,7 +40,7 @@ public class BlogpostsController : ControllerBase
     public async Task<ActionResult<BlogpostDto>> Create(CreateBlogpostDto dto)
     {
         var created = await _service.CreateAsync(dto);
-        // 201 Created + Location-header naar GET api/blogposts/{id}
+        // 201 + Location-header, dan weet de client waar de nieuwe blogpost te vinden is
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
