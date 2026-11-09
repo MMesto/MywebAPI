@@ -6,9 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// connectionstring staat in appsettings.json
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PortfolioDb")));
 
+// scoped = nieuwe instantie per request, net als de DbContext
 builder.Services.AddScoped<ProjectService>();
 builder.Services.AddScoped<BlogpostService>();
 

@@ -10,6 +10,7 @@ public class PortfolioDbContext : DbContext
     {
     }
 
+    // elke DbSet wordt een tabel
     public DbSet<Project> Projects { get; set; }
     public DbSet<Blogpost> Blogposts { get; set; }
 }

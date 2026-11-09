@@ -38,6 +38,7 @@ public class ProjectService
         _db.Projects.Add(project);
         _db.SaveChanges();
 
+        // Id is nu ingevuld door de database
         return ToDto(project);
     }
 
@@ -52,6 +53,7 @@ public class ProjectService
         project.GitHubUrl = dto.GitHubUrl;
         project.Datum = dto.Datum;
 
+        // EF ziet zelf welke velden veranderd zijn
         _db.SaveChanges();
         return true;
     }
@@ -66,6 +68,7 @@ public class ProjectService
         return true;
     }
 
+    // entity -> dto, op één plek zodat een nieuw veld maar hier bij hoeft
     private static ProjectDto ToDto(Project p) => new ProjectDto
     {
         Id = p.Id,

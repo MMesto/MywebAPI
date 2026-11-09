@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MywebAPI.Dtos;
 
+// wat de client terugkrijgt
 public class BlogpostDto
 {
     public int Id { get; set; }
@@ -10,6 +11,7 @@ public class BlogpostDto
     public DateTime Publicatiedatum { get; set; }
 }
 
+// POST: geen Id, die maakt de database
 public class CreateBlogpostDto
 {
     [Required, StringLength(150)]
@@ -21,6 +23,7 @@ public class CreateBlogpostDto
     public DateTime Publicatiedatum { get; set; }
 }
 
+// PUT: Id staat in de url
 public class UpdateBlogpostDto
 {
     [Required, StringLength(150)]

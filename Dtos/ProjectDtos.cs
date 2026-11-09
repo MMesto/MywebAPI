@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MywebAPI.Dtos;
 
+// wat de client terugkrijgt
 public class ProjectDto
 {
     public int Id { get; set; }
@@ -12,6 +13,7 @@ public class ProjectDto
     public DateTime Datum { get; set; }
 }
 
+// POST: geen Id, die maakt de database
 public class CreateProjectDto
 {
     [Required, StringLength(100)]
@@ -29,6 +31,7 @@ public class CreateProjectDto
     public DateTime Datum { get; set; }
 }
 
+// PUT: Id staat in de url
 public class UpdateProjectDto
 {
     [Required, StringLength(100)]

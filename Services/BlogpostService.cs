@@ -36,6 +36,7 @@ public class BlogpostService
         _db.Blogposts.Add(blogpost);
         _db.SaveChanges();
 
+        // Id is nu ingevuld door de database
         return ToDto(blogpost);
     }
 
@@ -48,6 +49,7 @@ public class BlogpostService
         blogpost.Inhoud = dto.Inhoud;
         blogpost.Publicatiedatum = dto.Publicatiedatum;
 
+        // EF ziet zelf welke velden veranderd zijn
         _db.SaveChanges();
         return true;
     }
@@ -62,6 +64,7 @@ public class BlogpostService
         return true;
     }
 
+    // entity -> dto, op één plek zodat een nieuw veld maar hier bij hoeft
     private static BlogpostDto ToDto(Blogpost b) => new BlogpostDto
     {
         Id = b.Id,

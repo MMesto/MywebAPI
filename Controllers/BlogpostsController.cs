@@ -36,6 +36,7 @@ public class BlogpostsController : ControllerBase
     public ActionResult<BlogpostDto> Create(CreateBlogpostDto dto)
     {
         var created = _service.Create(dto);
+        // 201 + Location-header naar het nieuwe item
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
