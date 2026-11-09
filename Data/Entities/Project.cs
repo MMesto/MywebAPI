@@ -2,10 +2,10 @@ namespace MywebAPI.Data.Entities;
 
 public class Project
 {
-    public int Id { get; set; }                       // primaire sleutel
-    public string Titel { get; set; } = string.Empty;
-    public string Beschrijving { get; set; } = string.Empty;
-    public string Categorie { get; set; } = string.Empty;
-    public string GitHubUrl { get; set; } = string.Empty;
+    public int Id { get; set; }
+    public string Titel { get; set; }
+    public string Beschrijving { get; set; }
+    public string Categorie { get; set; }
+    public string GitHubUrl { get; set; }
     public DateTime Datum { get; set; }
 }

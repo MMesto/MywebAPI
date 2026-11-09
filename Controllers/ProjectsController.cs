@@ -8,47 +8,41 @@ namespace MywebAPI.Controllers;
 [ApiController]
 public class ProjectsController : ControllerBase
 {
-    private readonly IProjectService _service;
+    private readonly ProjectService _service;
 
-    public ProjectsController(IProjectService service)
+    public ProjectsController(ProjectService service)
     {
         _service = service;
     }
 
-    // GET: api/projects
     [HttpGet]
-    public async Task<ActionResult<List<ProjectDto>>> GetAll()
+    public ActionResult<List<ProjectDto>> GetAll()
     {
-        var projects = await _service.GetAllAsync();
-        return Ok(projects);
+        return _service.GetAll();
     }
 
-    // GET: api/projects/5
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ProjectDto>> GetById(int id)
+    public ActionResult<ProjectDto> GetById(int id)
     {
-        var project = await _service.GetByIdAsync(id);
+        var project = _service.GetById(id);
         if (project == null)
         {
             return NotFound();
         }
-        return Ok(project);
+        return project;
     }
 
-    // POST: api/projects
     [HttpPost]
-    public async Task<ActionResult<ProjectDto>> Create(CreateProjectDto dto)
+    public ActionResult<ProjectDto> Create(CreateProjectDto dto)
     {
-        var created = await _service.CreateAsync(dto);
-        // 201 + Location-header, dan weet de client waar het nieuwe project te vinden is
+        var created = _service.Create(dto);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
-    // PUT: api/projects/5
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, UpdateProjectDto dto)
+    public IActionResult Update(int id, UpdateProjectDto dto)
     {
-        var gelukt = await _service.UpdateAsync(id, dto);
+        var gelukt = _service.Update(id, dto);
         if (!gelukt)
         {
             return NotFound();
@@ -56,11 +50,10 @@ public class ProjectsController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/projects/5
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    public IActionResult Delete(int id)
     {
-        var gelukt = await _service.DeleteAsync(id);
+        var gelukt = _service.Delete(id);
         if (!gelukt)
         {
             return NotFound();

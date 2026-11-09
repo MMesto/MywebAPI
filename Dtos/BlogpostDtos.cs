@@ -5,18 +5,18 @@ namespace MywebAPI.Dtos;
 public class BlogpostDto
 {
     public int Id { get; set; }
-    public string Titel { get; set; } = string.Empty;
-    public string Inhoud { get; set; } = string.Empty;
+    public string Titel { get; set; }
+    public string Inhoud { get; set; }
     public DateTime Publicatiedatum { get; set; }
 }
 
 public class CreateBlogpostDto
 {
     [Required, StringLength(150)]
-    public string Titel { get; set; } = string.Empty;
+    public string Titel { get; set; }
 
     [Required]
-    public string Inhoud { get; set; } = string.Empty;
+    public string Inhoud { get; set; }
 
     public DateTime Publicatiedatum { get; set; }
 }
@@ -24,10 +24,10 @@ public class CreateBlogpostDto
 public class UpdateBlogpostDto
 {
     [Required, StringLength(150)]
-    public string Titel { get; set; } = string.Empty;
+    public string Titel { get; set; }
 
     [Required]
-    public string Inhoud { get; set; } = string.Empty;
+    public string Inhoud { get; set; }
 
     public DateTime Publicatiedatum { get; set; }
 }

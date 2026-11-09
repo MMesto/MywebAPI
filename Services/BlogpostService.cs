@@ -1,11 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using MywebAPI.Data;
 using MywebAPI.Data.Entities;
 using MywebAPI.Dtos;
 
 namespace MywebAPI.Services;
 
-public class BlogpostService : IBlogpostService
+public class BlogpostService
 {
     private readonly PortfolioDbContext _db;
 
@@ -14,21 +13,19 @@ public class BlogpostService : IBlogpostService
         _db = db;
     }
 
-    public async Task<List<BlogpostDto>> GetAllAsync()
+    public List<BlogpostDto> GetAll()
     {
-        var blogposts = await _db.Blogposts.AsNoTracking().ToListAsync();
-        return blogposts.Select(ToDto).ToList();
+        return _db.Blogposts.ToList().Select(ToDto).ToList();
     }
 
-    public async Task<BlogpostDto?> GetByIdAsync(int id)
+    public BlogpostDto? GetById(int id)
     {
-        var blogpost = await _db.Blogposts.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+        var blogpost = _db.Blogposts.FirstOrDefault(b => b.Id == id);
         return blogpost == null ? null : ToDto(blogpost);
     }
 
-    public async Task<BlogpostDto> CreateAsync(CreateBlogpostDto dto)
+    public BlogpostDto Create(CreateBlogpostDto dto)
     {
-        // d1: nieuwe blogpost maken van de dto
         var blogpost = new Blogpost
         {
             Titel = dto.Titel,
@@ -36,39 +33,32 @@ public class BlogpostService : IBlogpostService
             Publicatiedatum = dto.Publicatiedatum
         };
 
-        // d2: opslaan, daarna is het Id ingevuld
         _db.Blogposts.Add(blogpost);
-        await _db.SaveChangesAsync();
+        _db.SaveChanges();
 
-        // d3: teruggeven met het nieuwe Id erin
         return ToDto(blogpost);
     }
 
-    public async Task<bool> UpdateAsync(int id, UpdateBlogpostDto dto)
+    public bool Update(int id, UpdateBlogpostDto dto)
     {
-        // e1: ophalen met tracking aan, anders slaat SaveChanges niks op
-        var blogpost = await _db.Blogposts.FindAsync(id);
+        var blogpost = _db.Blogposts.Find(id);
         if (blogpost == null) return false;
 
-        // e2: nieuwe waarden zetten
         blogpost.Titel = dto.Titel;
         blogpost.Inhoud = dto.Inhoud;
         blogpost.Publicatiedatum = dto.Publicatiedatum;
 
-        // e3: wijzigingen wegschrijven
-        await _db.SaveChangesAsync();
+        _db.SaveChanges();
         return true;
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public bool Delete(int id)
     {
-        // f1: bestaat de blogpost wel?
-        var blogpost = await _db.Blogposts.FindAsync(id);
+        var blogpost = _db.Blogposts.Find(id);
         if (blogpost == null) return false;
 
-        // f2: weghalen en opslaan
         _db.Blogposts.Remove(blogpost);
-        await _db.SaveChangesAsync();
+        _db.SaveChanges();
         return true;
     }
 
@@ -79,4 +69,4 @@ public class BlogpostService : IBlogpostService
         Inhoud = b.Inhoud,
         Publicatiedatum = b.Publicatiedatum
     };
-}
+}

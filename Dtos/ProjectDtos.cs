@@ -2,49 +2,46 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MywebAPI.Dtos;
 
-// UITVOER: wat de client terugkrijgt bij GET
 public class ProjectDto
 {
     public int Id { get; set; }
-    public string Titel { get; set; } = string.Empty;
-    public string Beschrijving { get; set; } = string.Empty;
-    public string Categorie { get; set; } = string.Empty;
-    public string GitHubUrl { get; set; } = string.Empty;
+    public string Titel { get; set; }
+    public string Beschrijving { get; set; }
+    public string Categorie { get; set; }
+    public string GitHubUrl { get; set; }
     public DateTime Datum { get; set; }
 }
 
-// INVOER bij POST: geen Id, want dat kiest de database
 public class CreateProjectDto
 {
     [Required, StringLength(100)]
-    public string Titel { get; set; } = string.Empty;
+    public string Titel { get; set; }
 
     [Required]
-    public string Beschrijving { get; set; } = string.Empty;
+    public string Beschrijving { get; set; }
 
     [Required, StringLength(50)]
-    public string Categorie { get; set; } = string.Empty;
+    public string Categorie { get; set; }
 
     [Url]
-    public string GitHubUrl { get; set; } = string.Empty;
+    public string GitHubUrl { get; set; }
 
     public DateTime Datum { get; set; }
 }
 
-// INVOER bij PUT: geen Id, want dat staat in de URL
 public class UpdateProjectDto
 {
     [Required, StringLength(100)]
-    public string Titel { get; set; } = string.Empty;
+    public string Titel { get; set; }
 
     [Required]
-    public string Beschrijving { get; set; } = string.Empty;
+    public string Beschrijving { get; set; }
 
     [Required, StringLength(50)]
-    public string Categorie { get; set; } = string.Empty;
+    public string Categorie { get; set; }
 
     [Url]
-    public string GitHubUrl { get; set; } = string.Empty;
+    public string GitHubUrl { get; set; }
 
     public DateTime Datum { get; set; }
 }

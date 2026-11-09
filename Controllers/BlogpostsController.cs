@@ -8,47 +8,41 @@ namespace MywebAPI.Controllers;
 [ApiController]
 public class BlogpostsController : ControllerBase
 {
-    private readonly IBlogpostService _service;
+    private readonly BlogpostService _service;
 
-    public BlogpostsController(IBlogpostService service)
+    public BlogpostsController(BlogpostService service)
     {
         _service = service;
     }
 
-    // GET: api/blogposts
     [HttpGet]
-    public async Task<ActionResult<List<BlogpostDto>>> GetAll()
+    public ActionResult<List<BlogpostDto>> GetAll()
     {
-        var blogposts = await _service.GetAllAsync();
-        return Ok(blogposts);
+        return _service.GetAll();
     }
 
-    // GET: api/blogposts/5
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<BlogpostDto>> GetById(int id)
+    public ActionResult<BlogpostDto> GetById(int id)
     {
-        var blogpost = await _service.GetByIdAsync(id);
+        var blogpost = _service.GetById(id);
         if (blogpost == null)
         {
             return NotFound();
         }
-        return Ok(blogpost);
+        return blogpost;
     }
 
-    // POST: api/blogposts
     [HttpPost]
-    public async Task<ActionResult<BlogpostDto>> Create(CreateBlogpostDto dto)
+    public ActionResult<BlogpostDto> Create(CreateBlogpostDto dto)
     {
-        var created = await _service.CreateAsync(dto);
-        // 201 + Location-header, dan weet de client waar de nieuwe blogpost te vinden is
+        var created = _service.Create(dto);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
-    // PUT: api/blogposts/5
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, UpdateBlogpostDto dto)
+    public IActionResult Update(int id, UpdateBlogpostDto dto)
     {
-        var gelukt = await _service.UpdateAsync(id, dto);
+        var gelukt = _service.Update(id, dto);
         if (!gelukt)
         {
             return NotFound();
@@ -56,11 +50,10 @@ public class BlogpostsController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/blogposts/5
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    public IActionResult Delete(int id)
     {
-        var gelukt = await _service.DeleteAsync(id);
+        var gelukt = _service.Delete(id);
         if (!gelukt)
         {
             return NotFound();
