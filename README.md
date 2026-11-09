@@ -91,7 +91,7 @@ Een project toevoegen met `POST /api/projects`:
   "beschrijving": "Mijn eigen portfoliosite met projecten en blog",
   "categorie": "Web",
   "gitHubUrl": "https://github.com/MMesto/Portfolio-site",
-  "datum": "2026-10-30T00:00:00"
+  "datum": "2026-??-??T00:00:00"
 }
 ```
 
@@ -101,7 +101,7 @@ Een blogpost toevoegen met `POST /api/blogposts`:
 {
   "titel": "Mijn eerste blog",
   "inhoud": "Vandaag heb ik een Web API met EF Core en SQL Server gebouwd.",
-  "publicatiedatum": "2026-10-30T00:00:00"
+  "publicatiedatum": "2026-??-??T00:00:00"
 }
 ```
 

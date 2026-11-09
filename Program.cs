@@ -5,6 +5,8 @@ using MywebAPI.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // connectionstring staat in appsettings.json
 builder.Services.AddDbContext<PortfolioDbContext>(options =>
@@ -15,6 +17,9 @@ builder.Services.AddScoped<ProjectService>();
 builder.Services.AddScoped<BlogpostService>();
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 
